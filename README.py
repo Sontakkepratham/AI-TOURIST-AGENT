@@ -13,6 +13,14 @@ st.set_page_config(
 )
 GROQ_API_KEY = "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"
 
+import streamlit as st
+
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
+    temperature=0,
+    api_key=st.secrets["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"]
+)
+
 @st.cache_data
 def load_data():
     import os
