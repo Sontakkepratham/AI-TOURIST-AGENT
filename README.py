@@ -15,15 +15,15 @@ GROQ_API_KEY = "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"
 
 @st.cache_data
 def load_data():
-    with open("flights.json") as f:
+    import os
+    base_path = os.path.dirname(__file__)
+    with open(os.path.join(base_path, "flights.json")) as f:
         flights = json.load(f)
-    with open("hotels.json") as f:
+    with open(os.path.join(base_path, "hotels.json")) as f:
         hotels = json.load(f)
-    with open("places.json") as f:
+    with open(os.path.join(base_path, "places.json")) as f:
         places = json.load(f)
     return flights, hotels, places
-flights_data, hotels_data, places_data = load_data()
-
 @tool
 def search_flights(source: str, destination: str) -> str:
     """Search for available flights. Args: source city, destination city."""
