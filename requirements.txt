@@ -1,11 +1,9 @@
 langchain
-langchain-openai
-langchain-community
 langchain-core
-langchain-groq
+langchain-community
+langchain-google-genai
 langgraph
-openai
-groq
+google-generativeai
 requests
 streamlit
 python-dotenv
