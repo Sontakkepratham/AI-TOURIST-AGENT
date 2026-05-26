@@ -1,7 +1,7 @@
 langchain
 langchain-core
 langchain-community
-langchain-google-genai
+langchain-google-genai==2.1.4
 langgraph
 google-generativeai
 requests
