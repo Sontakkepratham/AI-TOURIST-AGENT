@@ -5,14 +5,14 @@ import os
 from langchain_core.tools import tool
 from langchain_groq import ChatGroq
 from langgraph.prebuilt import create_react_agent
-"color:#3D5A6A;font-style:italic"># --- Config ---
+
 st.set_page_config(
     page_title="AI Travel Planner",
     page_icon="airplane",
     layout="centered"
 )
-GROQ_API_KEY = "your-groq-api-key-here"
-"color:#3D5A6A;font-style:italic"># --- Load Data ---
+GROQ_API_KEY = "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"
+
 @st.cache_data
 def load_data():
     with open("flights.json") as f:
@@ -23,7 +23,7 @@ def load_data():
         places = json.load(f)
     return flights, hotels, places
 flights_data, hotels_data, places_data = load_data()
-"color:#3D5A6A;font-style:italic"># --- Tools ---
+
 @tool
 def search_flights(source: str, destination: str) -> str:
     """Search for available flights. Args: source city, destination city."""
@@ -108,10 +108,10 @@ def calculate_budget(flight_cost: int, hotel_per_night: int, num_nights: int, da
                 f"  Total: {total}")
     except Exception as e:
         return f"Error: {str(e)}"
-"color:#3D5A6A;font-style:italic"># --- Agent ---
+
 @st.cache_resource
 def get_agent():
-    llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0, api_key=GROQ_API_KEY)
+    llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0, api_key=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)
     tools = [search_flights, search_hotels, search_places, get_weather, calculate_budget]
     system_prompt = """You are an expert AI travel planning assistant for Indian cities.
 Available cities: Delhi, Mumbai, Goa, Bangalore, Hyderabad, Chennai, Kolkata, Jaipur
