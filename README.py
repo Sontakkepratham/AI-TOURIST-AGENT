@@ -11,7 +11,7 @@ st.set_page_config(
     page_icon="airplane",
     layout="centered"
 )
-GROQ_API_KEY = "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"
+GROQ_API_KEY = "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"
 
 @st.cache_data
 def load_data():
