@@ -6,6 +6,14 @@ from langchain_core.tools import tool
 from langchain_groq import ChatGroq
 from langgraph.prebuilt import create_react_agent
 
+GROQ_API_KEY = "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"
+
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
+    temperature=0,
+    api_key=GROQ_API_KEY
+)
+
 st.set_page_config(
     page_title="AI Travel Planner",
     page_icon="airplane",
