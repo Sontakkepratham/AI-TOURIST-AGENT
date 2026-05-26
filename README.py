@@ -118,7 +118,7 @@ Available cities: Delhi, Mumbai, Goa, Bangalore, Hyderabad, Chennai, Kolkata, Ja
 Steps: 1) search_flights 2) search_hotels 3) get_weather 4) search_places 5) calculate_budget
 Use exact prices from tool results in calculate_budget. Never use 0 values."""
     return create_react_agent(model=llm, tools=tools, prompt=system_prompt)
-"color:#3D5A6A;font-style:italic"># --- UI ---
+
 st.title("AI Travel Planner")
 st.markdown("Plan your perfect Indian trip with AI")
 CITIES = ["Delhi", "Mumbai", "Goa", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Jaipur"]
