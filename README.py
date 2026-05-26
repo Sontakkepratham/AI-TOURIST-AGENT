@@ -140,5 +140,5 @@ if st.button("Plan My Trip", use_container_width=True):
             result = agent.invoke({"messages": [{"role": "user", "content": query}]})
         st.success("Your itinerary is ready!")
         st.markdown("---")
-        st.markdown("">### Your Trip Itinerary")
+        st.markdown("### Your Trip Itinerary")
         st.write(result["messages"][-1].content)
