@@ -3,7 +3,7 @@ import json
 import requests
 import os
 from langchain_core.tools import tool
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langgraph.prebuilt import create_react_agent
  
 # --- Page Config ---
@@ -13,8 +13,18 @@ st.set_page_config(
     layout="centered"
 )
  
-# --- Google API Key ---
-GOOGLE_API_KEY = "AIzaSyBMK8GxrRVz4hPprNWWW6ZuiMHuUNmHZgE"
+# --- GROQ API KEY---
+GROQ_API_KEY = "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"
+
+GROQ_API_KEY = st.sidebar.text_input(
+    "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", 
+    type="123456789",
+    placeholder="gsk_..."
+)
+
+if not GROQ_API_KEY:
+    st.warning("Please enter your Groq API key in the sidebar to continue.")
+    st.stop()
  
 # --- Load Data ---
 @st.cache_data
@@ -190,38 +200,17 @@ def calculate_budget(flight_cost: int, hotel_per_night: int, num_nights: int, da
 # --- Agent ---
 @st.cache_resource
 def get_agent():
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash",
+    llm = ChatGroq(
+        model="llama-3.3-70b-versatile",
         temperature=0,
-        google_api_key=GOOGLE_API_KEY
+        api_key=GROQ_API_KEY
     )
     tools = [search_flights, search_hotels, search_places, get_weather, calculate_budget]
     system_prompt = """You are an expert AI travel planning assistant for Indian cities.
- 
 Available cities: Delhi, Mumbai, Goa, Bangalore, Hyderabad, Chennai, Kolkata, Jaipur
- 
-You must follow these steps in exact order for every trip planning request:
-Step 1: Call search_flights with the source and destination city names
-Step 2: Call search_hotels with the destination city name
-Step 3: Call get_weather with the destination city name
-Step 4: Call search_places with the destination city name and number of days
-Step 5: Call calculate_budget using the EXACT price numbers returned by search_flights and search_hotels
- 
-Critical rules:
-- Never use 0 as flight_cost or hotel_per_night in calculate_budget
-- Always extract the exact numeric price from tool results
-- If a flight result says Price: 3304 use 3304 as flight_cost
-- If a hotel result says Price: 2828 per night use 2828 as hotel_per_night
-- Never fabricate data. Only use what tools return.
- 
-End your response with a clean structured itinerary covering:
-- Flight details
-- Hotel details
-- Day-wise places to visit
-- Weather summary
-- Budget breakdown"""
-    return create_react_agent(model=llm, tools=tools, prompt=system_prompt)
- 
+Steps: 1) search_flights 2) search_hotels 3) get_weather 4) search_places 5) calculate_budget
+Use exact prices from tool results in calculate_budget. Never use 0 values."""
+    return create_react_agent(model=llm, tools=tools, prompt=system_prompt) 
  
 # --- UI ---
 st.title("✈️ AI Travel Planner")
