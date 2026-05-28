@@ -14,7 +14,7 @@ st.set_page_config(
 )
  
 # --- Google API Key ---
-GOOGLE_API_KEY = "AIzaSyAL6nJbX3prcT_P4RO6BqaveljQjg4_o2Y"
+GOOGLE_API_KEY = "AIzaSyBMK8GxrRVz4hPprNWWW6ZuiMHuUNmHZgE"
  
 # --- Load Data ---
 @st.cache_data
@@ -191,7 +191,7 @@ def calculate_budget(flight_cost: int, hotel_per_night: int, num_nights: int, da
 @st.cache_resource
 def get_agent():
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-flash-preview-05-20",
         temperature=0,
         google_api_key=GOOGLE_API_KEY
     )
@@ -249,13 +249,16 @@ if st.button("Plan My Trip ✈️", use_container_width=True):
     if source == destination:
         st.error("Source and destination cannot be the same city.")
     else:
-        with st.spinner("Planning your trip... this may take 20-30 seconds"):
-            agent = get_agent()
-            query = f"Plan a {days}-day trip to {destination} from {source}. Budget is {budget}."
-            result = agent.invoke({
-                "messages": [{"role": "user", "content": query}]
-            })
-        st.success("Your itinerary is ready!")
-        st.markdown("---")
-        st.markdown("### Your Trip Itinerary")
-        st.write(result["messages"][-1].content)
+        try:
+            with st.spinner("Planning your trip... this may take 20-30 seconds"):
+                agent = get_agent()
+                query = f"Plan a {days}-day trip to {destination} from {source}. Budget is {budget}."
+                result = agent.invoke({
+                    "messages": [{"role": "user", "content": query}]
+                })
+            st.success("Your itinerary is ready!")
+            st.markdown("---")
+            st.markdown("### Your Trip Itinerary")
+            st.write(result["messages"][-1].content)
+        except Exception as e:
+            st.error(f"Full error: {str(e)}")
