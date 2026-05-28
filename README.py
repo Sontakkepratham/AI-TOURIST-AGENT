@@ -191,7 +191,7 @@ def calculate_budget(flight_cost: int, hotel_per_night: int, num_nights: int, da
 @st.cache_resource
 def get_agent():
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash-preview-05-20",
+        model="gemini-2.5-flash",
         temperature=0,
         google_api_key=GOOGLE_API_KEY
     )
