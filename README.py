@@ -17,11 +17,14 @@ st.set_page_config(
 GROQ_API_KEY = "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"
 
 GROQ_API_KEY = st.sidebar.text_input(
-    "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", 
-    type="123456789",
+    "Enter Groq API Key",
+    type="password",
     placeholder="gsk_..."
 )
 
+if not GROQ_API_KEY:
+    st.warning("Please enter your Groq API key in the sidebar to continue.")
+    st.stop()
 if not GROQ_API_KEY:
     st.warning("Please enter your Groq API key in the sidebar to continue.")
     st.stop()
